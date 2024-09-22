@@ -1,0 +1,87 @@
+body {
+    background-image: url("https://www.textures.com/system/gallery/photos/Landscapes/Skies%20Partial/19586/Skies0258_2_download600.jpg");
+}
+
+.container-1 {
+    /* display: flex; */
+    width: 90%;
+    margin: auto;
+}
+
+.container-1 .mainbox {
+    text-align: center;
+    margin: auto;
+    border: 0px white solid;
+    box-shadow: 0 5px 7px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 15px #FF0000;
+    width: 60%;
+    margin-top: 10%;
+}
+
+input {
+    color: white;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 10px;
+    width: 90%;
+    height: 30px;
+}
+
+h1 {
+    color: #c2c2d6;
+    opacity: 0.5;
+    font-family: 'Google Sans', arial, sans-serif;
+    padding-bottom: 0;
+    padding-top: 16px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.3333;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.forgotAcc {
+    color: #c2c2d6;
+    opacity: 0.8;
+}
+
+.createAcc {
+    color: #c2c2d6;
+    opacity: 0.8;
+}
+
+/* body {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -140px;
+} */
+
+button {
+    opacity: 0.6;
+    background: grey;
+    color: white;
+    /* float: right; */
+    border: 0px;
+    border-radius: 10%;
+    font-size: 14px;
+    box-shadow: 0 5px 7px 1px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    font-family: inherit;
+    width: 15%;
+}
+
+button:hover,
+.createAcc:hover,
+.forgotAcc:hover {
+    opacity: 1.0;
+}
+
+a{
+    text-decoration: none;
+}
