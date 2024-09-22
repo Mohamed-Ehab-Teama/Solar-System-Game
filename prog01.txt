@@ -1,0 +1,11 @@
+I wanna a website: it will be a game about exploring the space.
+It will be levels, in each level, there will be sessions. in each session, we will know many information about space, solar system, eclipses and so on.
+When we know the information, we will achieved this session of the level and get coins and go to the next session of the level.
+And when we achieve all the sessions of the level, there will be a quiz.
+We must achieve more than 70% of that quiz to achieve this level and go to the next level.
+The Quiz will give you extra coins depending on your score if you achieved the quiz.
+The coins: by coins, you will be able to change you avatar, choses a planet to live on, update the planet, and so on.
+I wanna the website responsive, looks great, and having 3D photos and videos and tutorials.
+I wanna it take the first place in the competition please.
+and I appreciate a lot your help .
+Thanks Brother
