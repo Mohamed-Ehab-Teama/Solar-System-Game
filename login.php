@@ -21,38 +21,44 @@
 <body>
 
 
-  <!-- If there an error -->
-  <?php if (isset($_SESSION['error'])): ?>
-
-    <div class="alert alert-warning text-center">
-      <?php echo $_SESSION['error']; ?>
-    </div>
-
-    <?php unset($_SESSION['error']); ?>
-
-  <?php endif; ?>
-  <!-- end of error display -->
+  <h1 class="text-center mt-5">Login page</h1>
 
 
-  <!-- In case of Success -->
-  <?php if (isset($_SESSION['success'])): ?>
 
-    <div class="alert alert-success text-center">
-      <?php echo $_SESSION['success']; ?>
-    </div>
+  <div>
+    <!-- If there an error -->
+    <?php if (isset($_SESSION['error'])): ?>
 
-    <?php unset($_SESSION['success']); ?>
+      <div class="alert alert-warning text-center">
+        <?php echo $_SESSION['error']; ?>
+      </div>
 
-    <?php header('refresh:2; url=profile.php') ?>
+      <?php unset($_SESSION['error']); ?>
 
-  <?php endif; ?>
-  <!-- end of success display -->
+    <?php endif; ?>
+    <!-- end of error display -->
+
+
+    <!-- In case of Success -->
+    <?php if (isset($_SESSION['success'])): ?>
+
+      <div class="alert alert-success text-center">
+        <?php echo $_SESSION['success']; ?>
+      </div>
+
+      <?php unset($_SESSION['success']); ?>
+
+      <?php header('refresh:2; url=profile.php') ?>
+
+    <?php endif; ?>
+    <!-- end of success display -->
+  </div>
 
 
 
   <!-- Form -->
   <div class="container-1">
-    <form action="loginHandle.php" method="post">
+    <form action="./loginHandle.php" method="post">
       <div class="mainbox">
         <h1>Sign in</h1>
         <br />
@@ -80,7 +86,7 @@
           <br />
 
           <br />
-          <button type="submit" value="submit">Log in</button>
+          <button type="submit" value="submit" name="submit">Log in</button>
           <br />
           <br />
           <br />

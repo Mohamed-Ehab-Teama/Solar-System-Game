@@ -21,6 +21,7 @@
 <body>
 
 
+  <h1 class="text-center mt-5">Registration page</h1>
 
 
 
@@ -61,7 +62,7 @@
 
   <!-- Form -->
   <div class="container-1">
-    <form action="registerHandle.php" method="post">
+    <form action="./registerHandle.php" method="post">
       <div class="mainbox">
         <h1>Sign Up</h1>
         <br />
@@ -100,7 +101,7 @@
           <br />
           <br />
           <br />
-          <button type="submit" value="submit">Register</button>
+          <button type="submit" value="submit" name="submit">Register</button>
           <br />
           <br />
           <br />
