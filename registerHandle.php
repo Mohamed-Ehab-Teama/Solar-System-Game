@@ -168,12 +168,16 @@ if (isset($_POST['submit'])){
     {
         // Inserting data to database:
 
-        $query = "INSERT INTO users (name,email,pass,image) 
-        VALUES(?, ?, ?, ?)";
+        $query = "INSERT INTO users (username,email,password) 
+        VALUES(?, ?, ?)";
 
         $sqlQuery = $connection->prepare($query);
 
-        $sqlQuery->execute([$name, $email, $pass, $cpass]);
+        // $name
+        // $email
+        // $pass
+
+        $sqlQuery->execute([$name, $email, $pass]);
 
 
         $_SESSION['success'] = 'Registered Successfully';

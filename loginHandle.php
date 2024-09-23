@@ -54,7 +54,7 @@ if (isset($_POST['submit'])){
         $pass = md5($pass);
 
         // get data from database
-        $query = "select * from users where email = ? and pass = ? ";
+        $query = "select * from users where email = ? and password = ? ";
 
         $sqlQuery = $connection->prepare($query);
 
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])){
 
             $_SESSION['login'] = true;
             $_SESSION['success'] = 'Login Successful';
-            header('location:home.php');
+            header('location:index.php');
             exit;
         }
         else

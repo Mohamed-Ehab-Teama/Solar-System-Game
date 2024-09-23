@@ -21,7 +21,7 @@
 <body>
 
 
-  <h1 class="text-center mt-2">Login page</h1>
+  <h1 class="text-center mt-5">Login page</h1>
 
 
 
@@ -29,7 +29,7 @@
     <!-- If there an error -->
     <?php if (isset($_SESSION['error'])): ?>
 
-      <div class="alert alert-warning text-center">
+      <div class="alert alert-warning text-center bg-transparent">
         <?php echo $_SESSION['error']; ?>
       </div>
 
@@ -42,7 +42,7 @@
     <!-- In case of Success -->
     <?php if (isset($_SESSION['success'])): ?>
 
-      <div class="alert alert-success text-center">
+      <div class="alert alert-success text-center bg-transparent">
         <?php echo $_SESSION['success']; ?>
       </div>
 
@@ -57,7 +57,7 @@
 
 
   <!-- Form -->
-  <div class="container-1">
+  <div class="container-1 mt-5">
     <form action="./loginHandle.php" method="post">
       <div class="mainbox">
         <h1>Sign in</h1>

@@ -1,0 +1,32 @@
+
+.nav-style:hover {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.main-card{
+    width: 60%; 
+    margin: auto;
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* height: 45vh; */
+    border: solid 1px white;
+    border-radius: 50px;
+    box-shadow: 0 0 20px #FF0000;
+    font-size: 1.2rem;
+    transition: transform 0.5s;
+}
+
+.main-card:hover{
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    transform: scale(1.2);
+}
+
+.main-card h1{
+    font-size: 3rem;
+    text-shadow: 0 0 50px blue;
+}
+
+.main-card p{
+    color: white;
+}
+
