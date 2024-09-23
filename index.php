@@ -38,7 +38,7 @@ $email = $_SESSION['email'];
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="./solar-system.php">
-                            <button type="button" class="btn btn-outline-warning">3D Sloar System</button>
+                            <button type="button" class="btn btn-outline-warning">3D Solar System</button>
 
                         </a>
                     </li>
