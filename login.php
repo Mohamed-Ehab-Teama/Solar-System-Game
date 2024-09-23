@@ -9,19 +9,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sign in</title>
   <link rel="icon" href="./images/logo.png" />
-  <!-- <link
+  <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
-    /> -->
+    />
   <link rel="stylesheet" href="./css/login.css" />
 </head>
 
 <body>
 
 
-  <h1 class="text-center mt-5">Login page</h1>
+  <h1 class="text-center mt-2">Login page</h1>
 
 
 
