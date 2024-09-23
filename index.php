@@ -72,37 +72,61 @@ $email = $_SESSION['email'];
                 Join us as we explore our planetary neighborhood: The Sun, planets, moons, comets, and asteroids.
             </p>
             <!-- Image Cards -->
-            <div class="container text-center">
-                <div class="row">
+            <div class="img-cards d-flex flex-column justify-content-around">
+                <!-- Row 1 -->
+                <div class="row-div d-flex flex-row justify-content-around">
                     <div class="card col">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
+                        <center>
+                            <img src="./images/solar-system-bg.jpg" class="card-img-top" alt="...">
+                            <h3>Solar System</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The solar system includes the Sun, eight planets, five officially named dwarf planets, and hundreds of moons, and thousands of asteroids and comets
+                                </p>
+                            </div>
+                        </center>
                     </div>
                     <div class="card col">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
+                        <center>
+                            <img src="./images/sun.jpeg" class="card-img-top" alt="...">
+                            <h3>The SUN</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The Sun is a massive, nearly perfect sphere of hot plasma at the center of the Solar System.
+                                </p>
+                            </div>
+                        </center>
                     </div>
-                    <div class="row">
-                        <div class="card col">
-                            <img src="..." class="card-img-top" alt="...">
+                </div>
+                <!-- Row 2 -->
+                <div class="row-div d-flex flex-row justify-content-around">
+                    <div class="card col">
+                        <center>
+                            <img src="./images/planets.jpeg" class="card-img-top" alt="...">
+                            <h3>The Planets</h3>
                             <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">
+                                    A planet is a large, rounded astronomical body that is generally required to be in orbit around a star, stellar remnant, or brown dwarf, and is not one itself.
+                                </p>
                             </div>
-                        </div>
-                        <div class="card col">
-                            <img src="..." class="card-img-top" alt="...">
+                        </center>
+                    </div>
+                    <div class="card col">
+                        <center>
+                            <img src="./images/eclipse.jpeg" class="card-img-top" alt="...">
+                            <h3>The Eclipse</h3>
                             <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">
+                                    A solar eclipse occurs when the Moon passes between Earth and the Sun, thereby obscuring the view of the Sun from a small part of Earth, totally or partially
+                                </p>
                             </div>
-                        </div>
+                        </center>
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
 
 
 
@@ -110,7 +134,7 @@ $email = $_SESSION['email'];
 
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>

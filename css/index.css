@@ -4,7 +4,7 @@
 }
 
 .main-card{
-    width: 60%; 
+    width: 55%; 
     margin: auto;
     color: yellow;
     background-color: rgba(0, 0, 0, 0.7);
@@ -19,14 +19,40 @@
 .main-card:hover{
     background-color: rgba(0, 0, 0, 0.6) !important;
     transform: scale(1.2);
+    box-shadow: 0 0 60px #FF0000;
 }
 
 .main-card h1{
-    font-size: 3rem;
-    text-shadow: 0 0 50px blue;
+    font-size: 3.2rem;
+    text-shadow: 0px 0px 10px silver;
 }
 
 .main-card p{
     color: white;
 }
 
+.img-cards .row-div .card {
+    background-color: rgba(42, 41, 41, 0.3);
+    width: 40%;
+    margin-bottom: 50px;
+    transition: transform 0.5s;
+}
+
+.img-cards .row-div .card:hover {
+    transform: scale(1.2);
+}
+
+.img-cards .row-div .card center img {
+    width: 90%;
+    height: 35vh;
+}
+
+.img-cards .row-div .card center h3 {
+    color: rgb(188, 234, 126);
+    /* font-size: 1rem; */
+}
+
+.img-cards .row-div .card center p {
+    color: whitesmoke;
+    font-size: 1rem;
+}
