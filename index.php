@@ -130,7 +130,147 @@ $email = $_SESSION['email'];
 
 
 
+    <!-- Second Card Content -->
+    <div class="main-card card mt-5">
+        <div class="card-body">
+            <h1 class="card-title text-center">Solar Phenomena</h1>
+            <br>
+            <p class="card-text">
+                Solar Phenomenas are natural phenomena which occur within the atmosphere of the Sun.
+            </p>
+            <!-- Image Cards -->
+            <div class="img-cards d-flex flex-column justify-content-around">
+                <!-- Row 1 -->
+                <div class="row-div d-flex flex-row justify-content-around">
+                    <div class="card col">
+                        <center>
+                            <img src="./images/solar wind 0.webp" class="card-img-top" alt="...">
+                            <h3>Solar Wind</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The solar wind is a continual stream of protons and electrons from the sun's outermost atmosphere — the corona.
+                                    <br>
+                                    <br>
+                                    These charged particles breeze through the solar system at speeds ranging from around 250 miles (400 kilometers) per second to 500 miles (800 km) per second, in a plasma state, according to the National Oceanic and Administration Space Weather Prediction Center (SWPC)
+                                </p>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="card col">
+                        <center>
+                            <img src="./images/sunspot.jpeg" class="card-img-top" alt="...">
+                            <h3>SunSpots</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Sunspots are cooler regions on the Sun caused by a concentration of magnetic field lines.
+                                    <br>
+                                    Occasionally, dark spots freckle the face of the Sun. These are sunspots, cooler regions on the Sun caused by a concentration of magnetic field lines. Sunspots are the visible component of active regions, areas of intense and complex magnetic fields on the Sun that are the source of solar eruptions
+                                </p>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+
+
+
+    <!-- Last Content -->
+    <div class="main-card card mt-5">
+        <div class="card-body">
+            <!-- Image Cards -->
+            <div class="img-cards d-flex flex-column justify-content-around">
+                <!-- Row 1 -->
+                <div class="row-div d-flex flex-row justify-content-around">
+                    <div class="card col">
+                        <center>
+                            <img src="./images/telescope.jpeg" class="card-img-top" alt="...">
+                            <h3>Telescope</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    A telescope is a device used to observe distant objects by their emission, absorption, or reflection of electromagnetic radiation.
+                                    <br>
+                                    <br>
+                                    Originally, it was an optical instrument using lenses, curved mirrors, or a combination of both to observe distant objects – an optical telescope
+                                </p>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="card col">
+                        <center>
+                            <img src="./images/vechile explo.jpeg" class="card-img-top" alt="...">
+                            <h3>Space Exploration Vehicle (SEV)</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The Space Exploration Vehicle (SEV) is a modular vehicle concept developed by NASA from 2008 to 2015.
+                                    <br>
+                                    <br>
+                                    It would have consisted of a pressurized cabin that could be mated either with a wheeled chassis to form a rover for planetary surface exploration (on the Moon and elsewhere) or to a flying platform for open space missions such as servicing satellites and missions to near-Earth asteroids.
+                                </p>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="card col">
+                        <center>
+                            <img src="./images/space craft.jpeg" class="card-img-top" alt="...">
+                            <h3>Space Craft</h3>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    A spacecraft is a vehicle that is designed to fly and operate in outer space.
+                                    <br>
+                                    <br>
+                                    Spacecraft are used for a variety of purposes, including communications, Earth observation, meteorology, navigation, space colonization, planetary exploration, and transportation of humans and cargo.
+                                </p>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Footer -->
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+    <!-- <div class="container my-5"> -->
+    <footer class="my-footer text-center text-lg-start bg-transparent" style="background-color: #db6930;">
+        <div class="container d-flex justify-content-center py-5">
+            <a href="https://www.facebook.com/NASA/" target="_blank">
+                <button type="button" class="btn btn-primary bg-transparent btn-lg btn-floating mx-2" style="background-color: #54456b;">
+                    <i class="fab fa-facebook">
+                        <img src="./images/facebook logo.png" alt="logo">
+                    </i>
+                </button>
+            </a>
+            <a href="https://www.linkedin.com/company/nasa" target="_blank">
+                <button type="button" class="btn btn-primary bg-transparent btn-lg btn-floating mx-2" style="background-color: #54456b;">
+                    <i class="fab fa-linkedin">
+                        <img src="./images/linkedin logo.jpg" alt="logo">
+                    </i>
+                </button>
+            </a>
+            <a href="https://www.youtube.com/user/NASAtelevision" target="_blank">
+                <button type="button" class="btn btn-primary bg-transparent btn-lg btn-floating mx-2" style="background-color: #54456b;">
+                    <i class="fab fa-linkedin">
+                        <img src="./images/youtube logo.png" alt="logo">
+                    </i>
+                </button>
+            </a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 Copyright:
+            <a class="text-white" href="https://github.com/Mohamed-Ehab-Teama">Mohamed Ehab Teama</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- </div> -->
+    <!-- End of .container -->
 
 
 

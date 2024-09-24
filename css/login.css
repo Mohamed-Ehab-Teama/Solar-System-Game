@@ -1,6 +1,6 @@
-body {
+/* body {
     background-image: url("https://www.textures.com/system/gallery/photos/Landscapes/Skies%20Partial/19586/Skies0258_2_download600.jpg");
-}
+} */
 
 .container-1 {
     /* display: flex; */
@@ -12,10 +12,10 @@ body {
     text-align: center;
     margin: auto;
     border: 0px white solid;
-    box-shadow: 0 5px 7px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 7px 1px rgba(5, 21, 0, 0.2);
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 0 15px #FF0000;
+    box-shadow: 0 0 35px #4fea07;
     width: 60%;
     /* margin-top: 10%; */
 }
@@ -32,17 +32,18 @@ input {
 }
 
 h1 {
-    color: #c2c2d6;
-    opacity: 0.5;
+    color: #b3ff00;
+    opacity: 0.7;
     font-family: 'Google Sans', arial, sans-serif;
     padding-bottom: 0;
     padding-top: 16px;
-    font-size: 24px;
+    font-size: 2rem;
     font-weight: 400;
     line-height: 1.3333;
     margin-bottom: 0;
     margin-top: 0;
     text-align: center;
+    text-shadow: 5px 5px 2px rgb(3, 0, 6);
 }
 
 .forgotAcc {
@@ -66,7 +67,7 @@ h1 {
 } */
 
 button {
-    opacity: 0.6;
+    opacity: 0.8;
     background: grey;
     color: white;
     /* float: right; */
@@ -77,14 +78,70 @@ button {
     padding: 5px;
     font-family: inherit;
     width: 15%;
+    transition: 0.5s;
 }
 
 button:hover,
 .createAcc:hover,
 .forgotAcc:hover {
     opacity: 1.0;
+    transform: scale(1.2);
+}
+
+button:hover {
+    box-shadow: 0px 0px 30px 10px rgba(93, 223, 6, 0.2);
 }
 
 a{
     text-decoration: none;
 }
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------- */
+/* BackGround Video */
+
+/* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -100;
+  }
+  
+  /* Add some content at the bottom of the video/page */
+  .content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Style the button used to pause/play the video */
+  #myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #myBtn:hover {
+    background: #ddd;
+    color: black;
+  }
