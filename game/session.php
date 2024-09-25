@@ -1,28 +1,47 @@
 <?php
-// Include database connection
-require_once('../connection.php');
+// session.php
+
+require_once ('../connection.php');
 
 
 
-// Get the session ID from the URL
-$session_id = $_GET['session'];
-
-// Fetch the session data, including content
-$session = $connection->prepare("SELECT * FROM sessions WHERE id = :id");
-$session->execute(['id' => $session_id]);
-$session = $session->fetch();
-
-if (!$session) {
-    echo "Session not found.";
-    exit();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
 }
 
-// Update session completion when the user finishes it
+$user_id = $_SESSION['user_id'];
+$level_id = $_GET['level_id'];
+$session_number = $_GET['session_number'];
+
+// Fetch session details
+$session_stmt = $connection->prepare("
+    SELECT * 
+    FROM sessions 
+    WHERE level_id = :level_id AND session_number = :session_number AND user_id = :user_id
+");
+$session_stmt->execute([
+    'level_id' => $level_id,
+    'session_number' => $session_number,
+    'user_id' => $user_id
+]);
+$session = $session_stmt->fetch(PDO::FETCH_ASSOC);
+
+// Mark session as completed
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $connection->prepare("UPDATE sessions SET is_completed = 1 WHERE id = :id");
-    $stmt->execute(['id' => $session_id]);
-    header('Location: level.php?level=' . $session['level']);
-    exit();
+    $update_stmt = $connection->prepare("
+        UPDATE sessions 
+        SET is_completed = 1 
+        WHERE id = :session_id
+    ");
+    $update_stmt->execute(['session_id' => $session['id']]);
+
+    // Award coins to the user
+    $coins_stmt = $connection->prepare("UPDATE users SET coins = coins + 10 WHERE id = :user_id");
+    $coins_stmt->execute(['user_id' => $user_id]);
+
+    header("Location: level.php?level_id=$level_id");
+    exit;
 }
 ?>
 
@@ -31,24 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session <?= $session['session_number']; ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Session <?php echo $session['session_number']; ?></title>
 </head>
 <body>
+    <div class="container">
+        <h1>Session <?php echo $session['session_number']; ?></h1>
+        <p><?php echo $session['content']; ?></p>
 
-<div class="container mt-5">
-    <h1 class="text-center">Session <?= $session['session_number']; ?></h1>
-    <p class="text-center">Learn about space in this session!</p>
-
-    <!-- Display the session content -->
-    <div class="session-content">
-        <p><?= $session['content']; ?></p>
+        <form method="post">
+            <button type="submit" class="btn btn-primary">Complete Session</button>
+        </form>
     </div>
-
-    <form method="POST">
-        <button type="submit" class="btn btn-primary">Complete Session</button>
-    </form>
-</div>
-
 </body>
 </html>

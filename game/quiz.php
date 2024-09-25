@@ -1,32 +1,54 @@
 <?php
-// Include database connection
-require_once('../connection.php');
+// quiz.php
+
+require_once ('../connection.php');
 
 
 
-// Get the level ID
-$level_id = $_GET['level'];
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
 
-// When the user submits the quiz
+$user_id = $_SESSION['user_id'];
+$level_id = $_GET['level_id'];
+
+// Check if user completed all sessions in this level
+$completion_check_stmt = $connection->prepare("
+    SELECT COUNT(*) as total_sessions, SUM(is_completed) as completed_sessions 
+    FROM sessions 
+    WHERE level = :level_id AND user_id = :user_id
+");
+$completion_check_stmt->execute([
+    'level_id' => $level_id,
+    'user_id' => $user_id
+]);
+$completion_status = $completion_check_stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($completion_status['total_sessions'] != $completion_status['completed_sessions']) {
+    echo "You must complete all sessions before taking the quiz.";
+    exit;
+}
+
+// Implement quiz logic and store results in database
+// For simplicity, assume quiz submission is done here
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $score = rand(50, 100); // Random score for now
-    $coins_awarded = ($score > 70) ? 50 : 0; // Award coins if score > 70
+    $score = rand(50, 100); // Example score generation
 
-    // Insert quiz result
-    $stmt = $connection->prepare("INSERT INTO quizzes (user_id, level, score, coins_awarded) VALUES (:user_id, :level, :score, :coins_awarded)");
-    $stmt->execute([
-        'user_id' => 1, // Assuming user_id = 1 for now
+    // Store quiz result
+    $quiz_stmt = $connection->prepare("
+        INSERT INTO quizzes (user_id, level, score, coins_awarded) 
+        VALUES (:user_id, :level, :score, :coins_awarded)
+    ");
+    $quiz_stmt->execute([
+        'user_id' => $user_id,
         'level' => $level_id,
         'score' => $score,
-        'coins_awarded' => $coins_awarded
+        'coins_awarded' => ($score >= 70 ? 50 : 0)
     ]);
 
-    // Update user's coin balance
-    $stmt = $connection->prepare("UPDATE users SET coins = coins + :coins_awarded WHERE id = :user_id");
-    $stmt->execute(['coins_awarded' => $coins_awarded, 'user_id' => 1]);
-
-    header('Location: level.php?level=' . $level_id);
-    exit();
+    header("Location: progress.php");
+    exit;
 }
 ?>
 
@@ -35,20 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz for Level <?= $level_id; ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Quiz for Level <?php echo $level_id; ?></title>
 </head>
 <body>
+    <div class="container">
+        <h1>Quiz for Level <?php echo $level_id; ?></h1>
+        <p>Test your knowledge!</p>
 
-<div class="container mt-5">
-    <h1 class="text-center">Quiz for Level <?= $level_id; ?></h1>
-
-    <!-- Quiz content goes here -->
-
-    <form method="POST">
-        <button type="submit" class="btn btn-primary">Submit Quiz</button>
-    </form>
-</div>
-
+        <form method="post">
+            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+        </form>
+    </div>
 </body>
 </html>

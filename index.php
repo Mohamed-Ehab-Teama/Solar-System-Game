@@ -38,12 +38,12 @@ $email = $_SESSION['email'];
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="./solar-system.php">
-                            <button type="button" class="btn btn-outline-warning">3D Solar System</button>
+                            <button type="button" class="btn btn-outline-warning">3D Sloar System</button>
 
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="./game/game.php">
                             <button type="button" class="btn btn-outline-warning">Start Learning</button>
                         </a>
                     </li>

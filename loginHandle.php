@@ -76,6 +76,7 @@ if (isset($_POST['submit'])){
 
 
             $_SESSION['login'] = true;
+            $_SESSION['user_id'] = $result['id'];
             $_SESSION['success'] = 'Login Successful';
             header('location:index.php');
             exit;
