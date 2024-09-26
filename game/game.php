@@ -27,6 +27,12 @@ $levels = $levels_stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <?php if (isset($_SESSION['congrats'])): ?>
+        <div class="alert alert-success text-center">
+            <?php echo $_SESSION['congrats'] ?>
+            <?php unset($_SESSION['congrats']) ?>
+        </div>
+    <?php endif; ?>
     <div class="container">
         <h1>Welcome to the Space Exploration Game!</h1>
         <p>Select a level to start your journey.</p>

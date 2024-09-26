@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch user progress and coins
-$progress_stmt = $connection->prepare("SELECT * FROM users WHERE id = :user_id");
+$progress_stmt = $connection->prepare("SELECT coins, levels_completed FROM users WHERE id = :user_id");
 $progress_stmt->execute(['user_id' => $user_id]);
 $user_progress = $progress_stmt->fetch(PDO::FETCH_ASSOC);
 ?>

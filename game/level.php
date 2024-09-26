@@ -1,7 +1,7 @@
 <?php
 // level.php
 
-require_once ('../connection.php');
+require_once('../connection.php');
 
 
 
@@ -32,14 +32,44 @@ $sessions_stmt->execute([
 $sessions = $sessions_stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+
+
+
+<!-- Check if all sessions are completed -->
+<?php
+// Get total sessions in this level
+$total_sessions_stmt = $connection->prepare("SELECT total_sessions FROM levels WHERE id = :level_id");
+$total_sessions_stmt->execute(['level_id' => $level_id]);
+$total_sessions = $total_sessions_stmt->fetchColumn();
+
+// Get the number of sessions the user has completed for this level
+$completed_sessions_stmt = $connection->prepare("
+SELECT COUNT(*) FROM sessions
+WHERE level_id = :level_id AND is_completed = 1
+");
+$completed_sessions_stmt->execute(['level_id' => $level_id]);
+$completed_sessions = $completed_sessions_stmt->fetchColumn();
+
+// Check if all sessions are completed
+$all_sessions_completed = ($completed_sessions == $total_sessions ? true : false);
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $level['level_name']; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <h1><?php echo $level['level_name']; ?></h1>
@@ -62,6 +92,21 @@ $sessions = $sessions_stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             <?php } ?>
         </div>
+
+
+        
+        <!-- Show the button to access the quiz only if all sessions are completed -->
+        <?php if ($all_sessions_completed): ?>
+            <form action="quiz.php" method="get">
+                <input type="hidden" name="level_id" value="<?php echo $level_id; ?>">
+                <button type="submit">Go to Quiz</button>
+            </form>
+        <?php else: ?>
+            <p>You must complete all sessions to access the quiz.</p>
+        <?php endif; ?>
+
+
     </div>
 </body>
+
 </html>

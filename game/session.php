@@ -18,12 +18,11 @@ $session_number = $_GET['session_number'];
 $session_stmt = $connection->prepare("
     SELECT * 
     FROM sessions 
-    WHERE level_id = :level_id AND session_number = :session_number AND user_id = :user_id
+    WHERE level_id = :level_id AND session_number = :session_number
 ");
 $session_stmt->execute([
     'level_id' => $level_id,
-    'session_number' => $session_number,
-    'user_id' => $user_id
+    'session_number' => $session_number
 ]);
 $session = $session_stmt->fetch(PDO::FETCH_ASSOC);
 
