@@ -1,5 +1,5 @@
 <?php
-// progress.php
+
 
 require_once ('../connection.php');
 
@@ -12,24 +12,26 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user progress and coins
-$progress_stmt = $connection->prepare("SELECT coins, levels_completed FROM users WHERE id = :user_id");
+// Get user progress
+$progress_query = "SELECT levels_completed, coins FROM users WHERE id = :user_id";
+$progress_stmt = $connection->prepare($progress_query);
 $progress_stmt->execute(['user_id' => $user_id]);
-$user_progress = $progress_stmt->fetch(PDO::FETCH_ASSOC);
+$progress = $progress_stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Progress</title>
+    <title>User Progress</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <h1>Your Progress</h1>
-        <p>Coins: <?php echo $user_progress['coins']; ?></p>
-        <p>Levels Completed: <?php echo $user_progress['levels_completed']; ?></p>
+        <p>Levels Completed: <?php echo $progress['levels_completed']; ?></p>
+        <p>Coins: <?php echo $progress['coins']; ?></p>
+
+        <a href="index.php" class="btn btn-primary">Go Back to Levels</a>
     </div>
 </body>
 </html>

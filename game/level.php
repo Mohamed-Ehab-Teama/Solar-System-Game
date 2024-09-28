@@ -1,112 +1,49 @@
-<?php
-// level.php
-
-require_once('../connection.php');
-
-
-
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-
-$user_id = $_SESSION['user_id'];
-$level_id = $_GET['level_id'];
-
-// Fetch level details
-$level_stmt = $connection->prepare("SELECT * FROM levels WHERE id = :level_id");
-$level_stmt->execute(['level_id' => $level_id]);
-$level = $level_stmt->fetch(PDO::FETCH_ASSOC);
-
-// Fetch user's session progress
-$sessions_stmt = $connection->prepare("
-    SELECT * 
-    FROM sessions 
-    WHERE level_id = :level_id 
-    ORDER BY session_number
-");
-$sessions_stmt->execute([
-    'level_id' => $level_id,
-]);
-$sessions = $sessions_stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
-
-
-
-<!-- Check if all sessions are completed -->
-<?php
-// Get total sessions in this level
-$total_sessions_stmt = $connection->prepare("SELECT total_sessions FROM levels WHERE id = :level_id");
-$total_sessions_stmt->execute(['level_id' => $level_id]);
-$total_sessions = $total_sessions_stmt->fetchColumn();
-
-// Get the number of sessions the user has completed for this level
-$completed_sessions_stmt = $connection->prepare("
-SELECT COUNT(*) FROM sessions
-WHERE level_id = :level_id AND is_completed = 1
-");
-$completed_sessions_stmt->execute(['level_id' => $level_id]);
-$completed_sessions = $completed_sessions_stmt->fetchColumn();
-
-// Check if all sessions are completed
-$all_sessions_completed = ($completed_sessions == $total_sessions ? true : false);
-?>
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $level['level_name']; ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Level Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-        <h1><?php echo $level['level_name']; ?></h1>
-        <p><?php echo $level['description']; ?></p>
+    <div class="container mt-5">
+        <h1 class="text-center">Level Details</h1>
+        <?php
+        require_once '../connection.php'; // Database connection
+        $level_id = $_GET['id'];
+        $query = "SELECT * FROM levels WHERE id = :level_id";
+        $stmt = $connection->prepare($query);
+        $stmt->execute(['level_id' => $level_id]);
+        $level = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        <div class="row">
-            <?php foreach ($sessions as $session) { ?>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Session <?php echo $session['session_number']; ?></h5>
-                            <p class="card-text"><?php echo $session['content']; ?></p>
-                            <?php if ($session['is_completed']) { ?>
-                                <button class="btn btn-success">Completed</button>
-                            <?php } else { ?>
-                                <a href="session.php?level_id=<?php echo $level_id; ?>&session_number=<?php echo $session['session_number']; ?>" class="btn btn-primary">Start Session</a>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
+        echo "<h2>{$level['level_name']}</h2>";
+        echo "<p>{$level['description']}</p>";
+        ?>
+
+        <h3>Sessions</h3>
+        <div class="list-group">
+            <?php
+            $sessions_query = "SELECT * FROM sessions WHERE level_id = :level_id";
+            $sessions_stmt = $connection->prepare($sessions_query);
+            $sessions_stmt->execute(['level_id' => $level_id]);
+            $sessions = $sessions_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($sessions as $session) {
+                echo "
+                <a href='session.php?id={$session['id']}' class='list-group-item list-group-item-action'>
+                    Session {$session['session_number']}: {$session['content']}
+                </a>
+                ";
+            }
+            ?>
         </div>
-
-
-        
-        <!-- Show the button to access the quiz only if all sessions are completed -->
-        <?php if ($all_sessions_completed): ?>
-            <form action="quiz.php" method="get">
-                <input type="hidden" name="level_id" value="<?php echo $level_id; ?>">
-                <button type="submit">Go to Quiz</button>
-            </form>
-        <?php else: ?>
-            <p>You must complete all sessions to access the quiz.</p>
-        <?php endif; ?>
-
-
+        <a href="game.php" class="btn btn-secondary btn-block mt-3">Back to Home</a>
     </div>
-</body>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>

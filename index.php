@@ -52,6 +52,11 @@ $email = $_SESSION['email'];
                             <button type="button" class="btn btn-outline-warning">Profile</button>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <button type="button" class="btn btn-outline-warning">Games</button>
+                        </a>
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <a class="nav-link" href="./logout.php">
