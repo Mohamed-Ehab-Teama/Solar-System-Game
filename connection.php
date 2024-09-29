@@ -5,7 +5,7 @@ session_start();
 
 $DBtype = 'mysql';
 $host = 'localhost';
-$DBname = 'space_game';
+$DBname = 'dania_db';
 $DBuserName = 'root';
 $DBpassword = '';
 

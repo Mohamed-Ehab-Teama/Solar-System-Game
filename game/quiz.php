@@ -1,61 +1,95 @@
 <?php
-
-
-require_once '..connection.php';
-
+require_once('../connection.php');
 
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
+    die("You must be logged in to access this page.");
 }
 
-$user_id = $_SESSION['user_id'];
-$level_id = $_GET['level_id'];
+// Get the quiz ID from the URL
+$quiz_id = $_GET['quiz_id'] ?? null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Process quiz results
-    $score = $_POST['score']; // Calculate score from form data
-    $coin_award = $score > 70 ? 50 : 20; // Award based on score
+if (!$quiz_id) {
+    die("Quiz not found.");
+}
 
-    // Insert quiz result
-    $quiz_query = "INSERT INTO quizzes (user_id, level, score, coins_awarded) VALUES (:user_id, :level_id, :score, :coins_awarded)";
-    $quiz_stmt = $connection->prepare($quiz_query);
-    $quiz_stmt->execute([
-        'user_id' => $user_id,
-        'level_id' => $level_id,
-        'score' => $score,
-        'coins_awarded' => $coin_award
-    ]);
+// Fetch quiz details
+$quiz_query = "SELECT * FROM quizzes WHERE id = :quiz_id";
+$quiz_stmt = $connection->prepare($quiz_query);
+$quiz_stmt->bindParam(':quiz_id', $quiz_id);
+$quiz_stmt->execute();
+$quiz = $quiz_stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Update user coins
-    $coin_query = "UPDATE users SET coins = coins + :coin_award WHERE id = :user_id";
-    $coin_stmt = $connection->prepare($coin_query);
-    $coin_stmt->execute(['coin_award' => $coin_award, 'user_id' => $user_id]);
+if (!$quiz) {
+    die("Quiz not found.");
+}
 
-    // Mark level as completed
-    $complete_level_query = "UPDATE users SET levels_completed = levels_completed + 1 WHERE id = :user_id";
-    $complete_level_stmt = $connection->prepare($complete_level_query);
-    $complete_level_stmt->execute(['user_id' => $user_id]);
+// Fetch quiz questions
+$questions_query = "SELECT * FROM quiz_questions WHERE quiz_id = :quiz_id";
+$questions_stmt = $connection->prepare($questions_query);
+$questions_stmt->bindParam(':quiz_id', $quiz_id);
+$questions_stmt->execute();
+$questions = $questions_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    header("Location: progress.php");
-    exit;
+// Handle quiz submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $correct_answers = 0;
+    $total_questions = count($questions);
+
+
+    foreach ($questions as $question) {
+        $user_answer = $_POST['question_' . $question['id']] ?? null;
+
+        if ($user_answer == $question['correct_answer']) {
+            $correct_answers++;
+        }
+    }
+
+    $score = ($correct_answers / $total_questions) * 100;
+
+    if ($score >= 70) {
+        // Award coins for passing the quiz
+        $coins_awarded = 50; // Adjust coins as necessary
+        $user_id = $_SESSION['user_id'];
+        $coins_query = "UPDATE users SET coins = coins + :coins_awarded WHERE id = :user_id";
+        $coins_stmt = $connection->prepare($coins_query);
+        $coins_stmt->execute([
+            'coins_awarded' => $coins_awarded,
+            'user_id' => $user_id,
+        ]);
+
+        echo "Congratulations! You passed the quiz with a score of $score%. You earned $coins_awarded coins.";
+    } else {
+        echo "You failed the quiz with a score of $score%. Try again!";
+    }
+    exit; // Exit after processing the form
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Quiz for Level <?php echo $level_id; ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($quiz['quiz_name']); ?></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Quiz for Level <?php echo $level_id; ?></h1>
+    <div class="container">
+        <h1><?= htmlspecialchars($quiz['quiz_name']); ?></h1>
         <form method="POST">
-            <!-- Quiz questions go here -->
-            <input type="hidden" name="score" value="85"> <!-- Example score -->
-            <button type="submit" class="btn btn-success">Submit Quiz</button>
+            <?php foreach ($questions as $question): ?>
+                <div class="form-group">
+                    <label><?= htmlspecialchars($question['question_text']); ?></label><br>
+                    <div>
+                        <input type="radio" name="question_<?= $question['id']; ?>" value=<?php echo htmlspecialchars($question['option_a']); ?> <?= htmlspecialchars($question['option_a']); ?><br>
+                        <input type="radio" name="question_<?= $question['id']; ?>" value=<?php echo htmlspecialchars($question['option_b']); ?> <?= htmlspecialchars($question['option_b']); ?><br>
+                        <input type="radio" name="question_<?= $question['id']; ?>" value=<?php echo htmlspecialchars($question['option_c']) ?> <?= htmlspecialchars($question['option_c']); ?><br>
+                        <input type="radio" name="question_<?= $question['id']; ?>" value=<?php echo htmlspecialchars($question['option_d']) ?> <?= htmlspecialchars($question['option_d']); ?><br>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <button type="submit" class="btn btn-primary">Submit Quiz</button>
         </form>
     </div>
 </body>

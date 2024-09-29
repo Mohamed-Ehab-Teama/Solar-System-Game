@@ -1,37 +1,110 @@
+<?php
 
+
+require_once('../connection.php');
+
+
+if (!isset($_SESSION['user_id'])) {
+    die("You must be logged in to access this page.");
+}
+
+// Get the level_id and session_id from the URL
+$level_id = $_GET['level_id']; // Get the level_id from the URL
+$session_id = $_GET['session_id']; // Get the specific session_id from the URL
+
+// Fetch the specific session for the level
+$query = "SELECT * FROM sessions WHERE level_id = :level_id AND id = :session_id";
+$stmt = $connection->prepare($query);
+$stmt->bindParam(':level_id', $level_id);
+$stmt->bindParam(':session_id', $session_id);
+$stmt->execute();
+$session = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$session) {
+    die("Session not found.");
+}
+
+// User's ID
+$user_id = $_SESSION['user_id'];
+
+// Initialize variables for session limit
+$max_sessions_per_day = 2; // Maximum sessions a user can complete in a day
+
+// Get today's date
+$today = date('Y-m-d');
+
+// Check how many sessions have been completed today by the user
+$count_query = "SELECT COUNT(*) as session_count FROM sessions 
+                WHERE user_id = :user_id AND DATE(completed_at) = :today";
+$count_stmt = $connection->prepare($count_query);
+$count_stmt->bindParam(':user_id', $user_id);
+$count_stmt->bindParam(':today', $today);
+$count_stmt->execute();
+$count_result = $count_stmt->fetch(PDO::FETCH_ASSOC);
+$completed_today = $count_result['session_count'];
+
+// Complete a session
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if the session is already completed by the user
+    $check_query = "SELECT is_completed, coins_awarded FROM sessions WHERE id = :session_id AND user_id = :user_id";
+    $check_stmt = $connection->prepare($check_query);
+    $check_stmt->bindParam(':session_id', $session_id);
+    $check_stmt->bindParam(':user_id', $user_id);
+    $check_stmt->execute();
+    $result = $check_stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result && $result['is_completed']) {
+        // Session already completed
+        echo "You have already completed this session.";
+    } elseif ($completed_today >= $max_sessions_per_day) {
+        // User has reached the session limit for the day
+        echo "You have reached the maximum of $max_sessions_per_day sessions for today.";
+    } else {
+        // Update session as completed
+        $update_query = "UPDATE sessions SET is_completed = 1, user_id = :user_id, completed_at = NOW() WHERE id = :session_id";
+        $update_stmt = $connection->prepare($update_query);
+        $update_stmt->execute([
+            'session_id' => $session_id,
+            'user_id' => $user_id,
+        ]);
+
+        // Award coins for completing the session
+        $coins_awarded = 10; // Adjust the coins to award as necessary
+        $coins_query = "UPDATE users SET coins = coins + :coins_awarded WHERE id = :user_id";
+        $coins_stmt = $connection->prepare($coins_query);
+        $coins_stmt->execute([
+            'coins_awarded' => $coins_awarded,
+            'user_id' => $user_id,
+        ]);
+
+        echo "Session completed successfully! You earned $coins_awarded coins.";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session Details</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Session for Level <?= htmlspecialchars($level_id); ?></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Session Details</h1>
-        <?php
-        require_once '../connection.php'; // Database connection
-        $session_id = $_GET['id'];
-        $query = "SELECT * FROM sessions WHERE id = :session_id";
-        $stmt = $connection->prepare($query);
-        $stmt->execute(['session_id' => $session_id]);
-        $session = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        echo "<h2>{$session['content']}</h2>";
-        // Add your session content and logic here
-        ?>
-
-        <form method="POST" action="complete_session.php">
-            <input type="hidden" name="session_id" value="<?php echo $session['id']; ?>">
-            <button type="submit" class="btn btn-success">Complete Session</button>
-        </form>
-        <a href="level.php?id=<?php echo $session['level_id']; ?>" class="btn btn-secondary btn-block mt-3">Back to Level</a>
+    <div class="container">
+        <h1>Session for Level <?= htmlspecialchars($level_id); ?></h1>
+        <div class="session">
+            <h3>Session <?= htmlspecialchars($session['session_number']); ?></h3>
+            <p><?= htmlspecialchars($session['content']); ?></p>
+            <?php if ($session['is_completed']): ?>
+                <p class="text-success">You have completed this session.</p>
+            <?php else: ?>
+                <form method="POST" action="">
+                    <input type="hidden" name="session_id" value="<?= htmlspecialchars($session['id']); ?>">
+                    <button type="submit" class="btn btn-primary">Complete Session</button>
+                </form>
+            <?php endif; ?>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

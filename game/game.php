@@ -1,13 +1,4 @@
-<?php
-// require_once '../connection.php';
 
-
-// // Fetch all levels from the database
-// $levels_query = "SELECT * FROM levels";
-// $levels_stmt = $connection->prepare($levels_query);
-// $levels_stmt->execute();
-// $levels = $levels_stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,8 +54,28 @@
             }
             ?>
         </div>
-        <a href="add_levels.php" class="btn btn-success btn-block">Add Level</a>
-        <a href="add_sessions.php" class="btn btn-info btn-block">Add Session</a>
+
+
+        <?php
+            $user_id = $_SESSION['user_id'];
+            $query = "SELECT * FROM users WHERE id = :user_id";
+            $stmt = $connection->prepare($query);
+            $stmt->execute(
+                ['user_id' => $user_id]
+            );
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($users as $user) {
+                if ($user['is_admin']){ ?>
+                    <a href="add_levels.php" class="btn btn-success btn-block">Add Level</a>
+                    <a href="add_sessions.php" class="btn btn-info btn-block">Add Session</a>
+                    <a href="add_quiz.php" class="btn btn-info btn-block">Add Quiz</a>
+                    <a href="quiz_list.php" class="btn btn-info btn-block">Quizzes</a>
+                    <a href="add_quiz_question.php" class="btn btn-info btn-block">Add Quizz Questions</a>
+                <?php }
+            }
+        ?>
+
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
