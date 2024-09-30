@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2024 at 04:54 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Generation Time: Sep 30, 2024 at 02:43 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `dania_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `avatars`
+--
+
+CREATE TABLE `avatars` (
+  `id` int(11) NOT NULL,
+  `avatar_name` varchar(255) DEFAULT NULL,
+  `avatar_image` varchar(255) DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `avatars`
+--
+
+INSERT INTO `avatars` (`id`, `avatar_name`, `avatar_image`, `cost`) VALUES
+(1, 'Space Explorer', 'explorer.png', 50),
+(2, 'Astronaut', 'astronaut.png', 100),
+(3, 'Alien', 'alien.png', 150),
+(4, 'Robot', 'robot.png', 200),
+(5, 'Cosmic Warrior', 'warrior.png', 300);
 
 -- --------------------------------------------------------
 
@@ -57,6 +81,30 @@ CREATE TABLE `levels` (
 INSERT INTO `levels` (`id`, `level_number`, `level_name`, `description`, `total_sessions`) VALUES
 (1, 1, 'test', 'dkidhidhi', 12),
 (3, 2, 'Sun and planets', 'aaaaa', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `planets`
+--
+
+CREATE TABLE `planets` (
+  `id` int(11) NOT NULL,
+  `planet_name` varchar(255) DEFAULT NULL,
+  `planet_image` varchar(255) DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `planets`
+--
+
+INSERT INTO `planets` (`id`, `planet_name`, `planet_image`, `cost`) VALUES
+(1, 'Earth', 'earth.png', 100),
+(2, 'Mars', 'mars.png', 150),
+(3, 'Jupiter', 'jupiter.png', 200),
+(4, 'Saturn', 'saturn.png', 250),
+(5, 'Neptune', 'neptune.png', 300);
 
 -- --------------------------------------------------------
 
@@ -181,11 +229,65 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `coins`, `avatar`, `planet`, `levels_completed`, `created_at`, `is_admin`, `current_streak`, `longest_streak`, `last_activity`, `last_session_date`, `sessions_completed_today`) VALUES
-(1, 'User 01', 'user1@test.com', '25f9e794323b453885f5181f1b624d0b', 440, 'default_avatar.png', 'Earth', 0, '2024-09-28 10:33:52', 1, 1, 1, '2024-09-29', '2024-09-29', 11);
+(1, 'User 01', 'user1@test.com', '25f9e794323b453885f5181f1b624d0b', 440, 'default_avatar.png', 'Earth', 0, '2024-09-28 10:33:52', 1, 1, 1, '2024-09-29', '2024-09-29', 11),
+(2, 'User 02', 'user2@test.com', '25f9e794323b453885f5181f1b624d0b', 350, 'warrior.png', 'saturn.png', 0, '2024-09-29 18:23:05', NULL, 0, 0, NULL, NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_avatars`
+--
+
+CREATE TABLE `user_avatars` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `avatar_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_avatars`
+--
+
+INSERT INTO `user_avatars` (`id`, `user_id`, `avatar_id`) VALUES
+(1, 2, NULL),
+(2, 2, NULL),
+(3, 2, NULL),
+(4, 2, NULL),
+(5, 2, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_planets`
+--
+
+CREATE TABLE `user_planets` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `planet_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_planets`
+--
+
+INSERT INTO `user_planets` (`id`, `user_id`, `planet_id`) VALUES
+(1, 2, 1),
+(2, 2, 2),
+(3, 2, 3),
+(4, 2, 4),
+(5, 2, 5),
+(6, 2, 5);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `avatars`
+--
+ALTER TABLE `avatars`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `coins`
@@ -198,6 +300,12 @@ ALTER TABLE `coins`
 -- Indexes for table `levels`
 --
 ALTER TABLE `levels`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `planets`
+--
+ALTER TABLE `planets`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -229,8 +337,30 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `user_avatars`
+--
+ALTER TABLE `user_avatars`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `avatar_id` (`avatar_id`);
+
+--
+-- Indexes for table `user_planets`
+--
+ALTER TABLE `user_planets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `planet_id` (`planet_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `avatars`
+--
+ALTER TABLE `avatars`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `coins`
@@ -243,6 +373,12 @@ ALTER TABLE `coins`
 --
 ALTER TABLE `levels`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `planets`
+--
+ALTER TABLE `planets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `quizzes`
@@ -266,7 +402,19 @@ ALTER TABLE `sessions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user_avatars`
+--
+ALTER TABLE `user_avatars`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `user_planets`
+--
+ALTER TABLE `user_planets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -295,6 +443,20 @@ ALTER TABLE `quiz_questions`
 --
 ALTER TABLE `sessions`
   ADD CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
+
+--
+-- Constraints for table `user_avatars`
+--
+ALTER TABLE `user_avatars`
+  ADD CONSTRAINT `user_avatars_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_avatars_ibfk_2` FOREIGN KEY (`avatar_id`) REFERENCES `avatars` (`id`);
+
+--
+-- Constraints for table `user_planets`
+--
+ALTER TABLE `user_planets`
+  ADD CONSTRAINT `user_planets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_planets_ibfk_2` FOREIGN KEY (`planet_id`) REFERENCES `planets` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

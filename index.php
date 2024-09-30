@@ -9,6 +9,8 @@ if ($_SESSION['login'] != true) {
 
 $name = $_SESSION['username'];
 $email = $_SESSION['email'];
+$user_id = $_SESSION['user_id'];
+
 
 ?>
 
@@ -48,7 +50,7 @@ $email = $_SESSION['email'];
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="./game/progress.php">
                             <button type="button" class="btn btn-outline-warning">Profile</button>
                         </a>
                     </li>
