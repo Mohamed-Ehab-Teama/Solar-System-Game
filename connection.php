@@ -5,7 +5,7 @@ session_start();
 
 $DBtype = 'mysql';
 $host = 'localhost';
-$DBname = 'dania_db';
+$DBname = 'remas_db';
 $DBuserName = 'root';
 $DBpassword = '';
 

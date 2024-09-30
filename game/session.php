@@ -84,27 +84,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session for Level <?= htmlspecialchars($level_id); ?></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -100;
+        }
+
+        /* Add some content at the bottom of the video/page */
+        .content {
+            position: fixed;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: #f1f1f1;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Style the button used to pause/play the video */
+        #myBtn {
+            width: 200px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #myBtn:hover {
+            background: #ddd;
+            color: black;
+        }
+    </style>
 </head>
+
 <body>
+
+    <video autoplay muted loop id="myVideo">
+        <source src="../vids/background-vid.mp4" type="video/mp4">
+    </video>
+
     <div class="container">
-        <h1>Session for Level <?= htmlspecialchars($level_id); ?></h1>
-        <div class="session">
-            <h3>Session <?= htmlspecialchars($session['session_number']); ?></h3>
-            <p><?= htmlspecialchars($session['content']); ?></p>
+        <h1 class="text-center text-warning m-5">Session for Level <?= htmlspecialchars($level_id); ?></h1>
+        <div class="session border border-warning rounded-pill">
+            <h3 class="text-center text-warning mt-5">Session <?= htmlspecialchars($session['session_number']); ?></h3>
+            <p class="text-white mt-5 p-5"><?= htmlspecialchars($session['content']); ?></p>
             <?php if ($session['is_completed']): ?>
-                <p class="text-success">You have completed this session.</p>
+                <p class="text-success text-center">You have completed this session.</p>
             <?php else: ?>
                 <form method="POST" action="">
                     <input type="hidden" name="session_id" value="<?= htmlspecialchars($session['id']); ?>">
-                    <button type="submit" class="btn btn-primary">Complete Session</button>
+                    <center>
+                        <button type="submit" class="btn btn-primary p-1 m-4">Complete Session</button>
+                    </center>
                 </form>
             <?php endif; ?>
         </div>
     </div>
+
+    <center>
+        <a href="game.php" class="btn btn-warning m-3">Back to Home</a>
+    </center>
+
+    <script src="../js/back-vid.js"></script>
 </body>
+
 </html>

@@ -148,34 +148,48 @@ if (isset($_POST['planet_id'])) {
         h4 {
             display: inline-block;
         }
+
+        body {
+            background-image: url("../images/profile-bg.jpg");
+            background-size: cover;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 class="text-center m-5 border rounded p-2">User Progress</h1>
+        <h1 class="text-center m-5 border border-warning rounded-pill  p-2 text-warning">User Progress</h1>
 
         <!-- Profile Section -->
-        <div class="profile-section border">
+        <div class="profile-section border border-warning rounded" style="background: rgba(0, 0, 0, .6) ">
             <img src="avatars/<?= htmlspecialchars($user['avatar']); ?>" alt="Avatar"
                 class="img-fluid rounded-circle m-3" width="200px">
-            <h3 class="m-3">User Name : <h1 style="display: in;"><?= htmlspecialchars($user['username']); ?></h1>
+            <h3 class="m-3 text-info">User Name : <h1 style="display: in;">
+                    <span class="text-warning"> <?= htmlspecialchars($user['username']); ?>
+                </h1> </span>
             </h3>
-            <p class="m-3">
-            <h4>Planet:</h4> <img src="planets/<?= htmlspecialchars($user['planet']); ?>" alt="Planet"
-                class="img-fluid m-3" width="200px"></p>
-            <p>
-            <h4>Levels Completed:</h4> <?= htmlspecialchars($user['levels_completed']); ?></p>
-            <p>
-            <h4>Sessions Completed Today:</h4> <?= htmlspecialchars($user['sessions_completed_today']); ?></p>
-            <p>
-            <h4>Coins:</h4> <?= htmlspecialchars($user['coins']); ?></p>
+            <p class="m-3 border border-bottom border-danger">
+            <h4 class="m-3 text-info">Planet:</h4> <img src="planets/<?= htmlspecialchars($user['planet']); ?>" alt="Planet"
+                class="img-fluid m-3" width="200px">
+            </p>
+            <p class="m-3 border border-bottom border-danger">
+            <h4 class="m-3 text-info">Levels Completed:</h4>
+            <h5 class="text-warning"><?= htmlspecialchars($user['levels_completed']); ?> </h5>
+            </p>
+            <p class="m-3 border border-bottom border-danger">
+            <h4 class="m-3 text-info">Sessions Completed Today:</h4>
+            <h5 class="text-warning"><?= htmlspecialchars($user['sessions_completed_today']); ?> </h5>
+            </p>
+            <p class="m-3 border border-bottom border-danger">
+            <h4 class="m-3 text-info">Coins:</h4>
+            <h5 class="text-warning"> <?= htmlspecialchars($user['coins']); ?> </h5>
+            </p>
         </div>
 
         <!-- Customization Section -->
-        <div class="customization-options">
-            <h4>Avatars</h4>
-            <div class="row border">
+        <div class="customization-options ">
+            <h4 class="text-info text-uppercase border-top border-left border-right border-info rounded pl-5 mb-0">Avatars</h4>
+            <div class="row border border-warning rounded p-4 m-4" style="background: rgba(0, 0, 0, .6) ">
                 <?php
                 // Fetch all avatars
                 $avatar_query = "SELECT * FROM avatars";
@@ -183,20 +197,20 @@ if (isset($_POST['planet_id'])) {
                 $avatars = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 foreach ($avatars as $avatar): ?>
-                    <div class="col-md-2">
+                    <div class="col-md-2 m-2 p-2">
                         <img src="avatars/<?= htmlspecialchars($avatar['avatar_image']); ?>" alt="Avatar">
-                        <p><?= htmlspecialchars($avatar['avatar_name']); ?> (<?= htmlspecialchars($avatar['cost']); ?>
+                        <p class="text-white"><?= htmlspecialchars($avatar['avatar_name']); ?> (<?= htmlspecialchars($avatar['cost']); ?>
                             coins)</p>
                         <form method="POST">
                             <input type="hidden" name="avatar_id" value="<?= htmlspecialchars($avatar['id']); ?>">
-                            <button type="submit" class="btn btn-primary">Buy/Equip</button>
+                            <button type="submit" class="btn btn-outline-danger">Buy/Equip</button>
                         </form>
                     </div>
                 <?php endforeach; ?>
             </div>
 
-            <h4>Planets</h4>
-            <div class="row border">
+            <h4 class="text-info text-uppercase border-top border-left border-right border-info rounded pl-5 mb-0">Planets</h4>
+            <div class="row border border-warning rounded p-4 m-4 " style="background: rgba(0, 0, 0, .6) ">
                 <?php
                 // Fetch all planets
                 $planet_query = "SELECT * FROM planets";
@@ -204,19 +218,23 @@ if (isset($_POST['planet_id'])) {
                 $planets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 foreach ($planets as $planet): ?>
-                    <div class="col-md-2">
+                    <div class="col-md-2 m-2 p-2">
                         <img src="planets/<?= htmlspecialchars($planet['planet_image']); ?>" alt="Planet">
-                        <p><?= htmlspecialchars($planet['planet_name']); ?> (<?= htmlspecialchars($planet['cost']); ?>
+                        <p class="text-white"><?= htmlspecialchars($planet['planet_name']); ?> (<?= htmlspecialchars($planet['cost']); ?>
                             coins)</p>
                         <form method="POST">
                             <input type="hidden" name="planet_id" value="<?= htmlspecialchars($planet['id']); ?>">
-                            <button type="submit" class="btn btn-primary">Buy/Equip</button>
+                            <button type="submit" class="btn btn-outline-danger">Buy/Equip</button>
                         </form>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
     </div>
+
+    <center>
+        <a href="../index.php" class="btn btn-outline-warning btn-block m-3">Back To Home Page</a>
+    </center>
 </body>
 
 </html>

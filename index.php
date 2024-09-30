@@ -26,9 +26,55 @@ $user_id = $_SESSION['user_id'];
     <link rel="icon" href="./images/logo.png" />
     <link rel="stylesheet" href="./css/index.css">
 
+    <style>
+        #myVideo {
+            z-index: -10;
+        }
+
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -100;
+        }
+
+        /* Add some content at the bottom of the video/page */
+        .content {
+            position: fixed;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: #f1f1f1;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Style the button used to pause/play the video */
+        #myBtn {
+            width: 200px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #myBtn:hover {
+            background: #ddd;
+            color: black;
+        }
+    </style>
+
 </head>
 
-<body style=" background-image: url(./images/solar-system-bg.jpg); background-size: cover; ">
+<!-- <body style=" background-image: url(./images/solar-system-bg.jpg); background-size: cover; "> -->
+
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="./vids/background-vid.mp4" type="video/mp4">
+    </video>
 
     <!-- NAVBAR -->
     <nav class="nav-style navbar navbar-expand-lg bg-transparent ">
@@ -55,7 +101,7 @@ $user_id = $_SESSION['user_id'];
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="./space_games/index.php">
                             <button type="button" class="btn btn-outline-warning">Games</button>
                         </a>
                     </li>
@@ -272,7 +318,7 @@ $user_id = $_SESSION['user_id'];
         <!-- Copyright -->
         <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             © 2024 Copyright:
-            <a class="text-white" href="https://github.com/Mohamed-Ehab-Teama">Mohamed Ehab Teama</a>
+            <a class="text-white" href="#">NASA SPACE</a>
         </div>
         <!-- Copyright -->
     </footer>
@@ -280,7 +326,7 @@ $user_id = $_SESSION['user_id'];
     <!-- End of .container -->
 
 
-
+    <script src="./js/back-vid.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
